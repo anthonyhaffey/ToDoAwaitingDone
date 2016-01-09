@@ -68,5 +68,40 @@
 		closedir($dir);
 	}
 
+	function array_to_csv($thisArray,$thisFileName){
+		$fp = fopen($thisFileName, 'w');
+			if(isset($thisArray[0])){
+				$thisArrayKeys=array_keys($thisArray[0]);
+			} else {
+				$thisArrayKeys=array_keys($thisArray[1]);
+			}
+			fputcsv($fp, $thisArrayKeys);
+			foreach($thisArray as $thisRow){
+				fputcsv($fp, $thisRow);
+			}
+			fclose($fp);		
+	}
 	
+	function ordered_array_to_csv($thisArray,$thisFileName,$order){
+		$fp = fopen($thisFileName, 'w');
+			if(isset($thisArray[0])){
+				$thisArrayKeys=array_keys($thisArray[0]);
+			} else {
+				$thisArrayKeys=array_keys($thisArray[1]);
+			}
+			fputcsv($fp, $thisArrayKeys);
+			for($i=0; $i<count($order); $i++){
+				if(isset($thisArray[$order[$i]])){
+					fputcsv($fp, $thisArray[$order[$i]]);
+				}
+			}
+			fclose($fp);		
+	}
+	
+	function cmp($a, $b) {
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a < $b) ? -1 : 1;
+	} //solution found on http://php.net/manual/en/function.uasort.php
 ?>
